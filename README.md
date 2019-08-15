@@ -1,10 +1,48 @@
-## 使用指南
+### 一、准备工作
 
-为了帮助OpenAPI的研发、测试与业务同学，方便快速验证或测试接口，为此开发了这款辅助工具。
+#### 1.1 安装环境
 
-### 如果你是Q音同学
+该工具采用Python开发，因此首先需要安装Python，在此不做赘述。同时，由于采用到第三方Library，因此将需要安装以下依赖：
 
-对于Q音内部同学，本工具已经预先定义了OpenID登录信息和设备登录信息，来简化生成URL。
+    $ pipenv install cryptography
+    $ pipenv install pycryptodome
+    
+#### 1.2 更新设置 
+
+openapi.py中定义基础参数，用来生成请求URL，请根据OpenAPI管理方提供的信息，更新`OpenAPI.ini`里的如下变量的值：
+
+```
+OPI_APP_ID = ''
+OPI_APP_KEY = ''
+OPI_APP_PRIVATE_KEY = ''
+```
+
+device.py用来请求硬件注册或登录，请根据OpenAPI管理方提供的信息，更新`OpenAPI.ini`里的如下变量的值：
+
+```
+DEV_AUTH_DEVICE_KEY = ''
+DEV_AUTH_SEED_PREFIX = ''
+DEV_AUTH_PRI_KEY = ''
+DEV_AUTH_PID = ''
+DEV_AUTH_SN = ''
+```
+
+合作伙伴可以在硬件注册成功之后，更新`OpenAPI.ini`里的变量`OPI_DEVICE_ID`和`OPI_DEVICE_KEY`，这样可重复使用，不必每次都注册或登录
+
+```
+OPI_DEVICE_ID = ''
+OPI_DEVICE_KEY = ''
+```
+
+auth.py用来记录用户登录的参数，即QQ音乐OpenID登录方案，请根据实际取值来更新`OpenAPI.ini`里的变量：
+
+```
+QQMUSIC_OPENID_APPID = ''
+QQMUSIC_OPENID_USERID = ''
+QQMUSIC_ACCESS_TOKEN = ''
+```   
+
+#### 1.3 常见问题
 
 如用户登录信息过期，会发现如下信息，此时需要更新`OpenAPI.ini`里的`QQMUSIC_OPENID_USERID`与`QQMUSIC_ACCESS_TOKEN`。
 
@@ -21,51 +59,7 @@
 
 ```json
 {"msg":"联合登录下，OPI设备登陆态较验失败!","ret":11105,"sub_ret":1}
-```
-
-### 如果你是合作伙伴
-
-对于合作伙伴，为了信息安全，敏感信息已去除，因此请务必更新如下信息：
-
-openapi.py中定义基础参数，用来生成请求URL，请根据OpenAPI管理方提供的信息来更新如下变量的值：
-
-```python
-OPI_APP_ID = ''
-OPI_APP_KEY = ''
-OPI_APP_PRIVATE_KEY = ''
-```
-
-device.py用来请求硬件注册或登录，请根据OpenAPI管理方提供的信息来更新如下变量的值：
-
-```python
-DEV_AUTH_DEVICE_KEY = ''
-DEV_AUTH_SEED_PREFIX = ''
-DEV_AUTH_PRI_KEY = ''
-DEV_AUTH_PID = ''
-DEV_AUTH_SN = ''
-```
-
-合作伙伴可以在硬件注册成功之后，更新openapi.py其中的变量`OPI_DEVICE_ID`和`OPI_DEVICE_KEY`，这样可重复使用，不必每次都注册或登录
-
-```python
-OPI_DEVICE_ID = ''
-OPI_DEVICE_KEY = ''
-```
-
-auth.py用来记录用户登录的参数，即QQ音乐OpenID登录方案，请根据实际取值来更新如下变量：
-
-```python
-QQMUSIC_OPENID_APPID = ''
-QQMUSIC_OPENID_USERID = ''
-QQMUSIC_ACCESS_TOKEN = ''
-```
-
-### 一、准备工作
-
-该工具采用Python开发，因此首先需要安装Python，在此不做赘述。同时，由于采用到第三方Library，因此将需要安装以下依赖：
-
-    $ pipenv install cryptography
-    $ pipenv install pycryptodome
+``` 
     
 ### 二、硬件接入
 
